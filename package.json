@@ -1,0 +1,7 @@
+{
+    "name": "blogs",
+    "private": true,
+    "scripts": {
+        "build:index": "node scripts/build-content-index.js"
+    }
+}

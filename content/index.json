@@ -1,0 +1,37 @@
+{
+  "generatedAt": "2026-05-26T17:25:00.034Z",
+  "count": 2,
+  "posts": [
+    {
+      "file": "a365-sdk-blueprint.md",
+      "title": "A365 SDK Blueprint",
+      "category": "Agent365",
+      "tags": [
+        "sdk",
+        "architecture",
+        "agent365",
+        "blueprint"
+      ],
+      "date": "2026-05-25",
+      "yearMonth": "2026-05",
+      "summary": "A practical starter blueprint for structuring an Agent365 SDK project.",
+      "author": "Copilot Sample",
+      "status": "draft",
+      "imgUrl": "assets/a365-sdk-blueprint-thumb.png",
+      "content": "\r\n# A365 SDK Blueprint\r\n\r\nThis sample document shows how to organize an **Agent365 SDK** project with a clean and scalable structure.\r\n\r\n## Goals\r\n\r\n- Define a predictable project layout.\r\n- Separate orchestration, tools, and domain logic.\r\n- Keep prompts and configuration version-controlled.\r\n\r\n## Suggested Folder Structure\r\n\r\n```text\r\nsrc/\r\n  agents/\r\n    assistant-agent.ts\r\n  tools/\r\n    graph-tool.ts\r\n    search-tool.ts\r\n  workflows/\r\n    intake-workflow.ts\r\n  prompts/\r\n    system.md\r\n  config/\r\n    runtime.ts\r\n  index.ts\r\n```\r\n\r\n## Core Design Principles\r\n\r\n1. Keep the agent instruction small and focused.\r\n2. Move reusable behaviors into tools.\r\n3. Use workflows for multi-step business processes.\r\n4. Add tracing and evaluation early.\r\n\r\n## Minimal Runtime Checklist\r\n\r\n- Environment variables for model endpoint and API key.\r\n- Central config loader with validation.\r\n- Logging and request correlation IDs.\r\n- Retry policy for external tool calls.\r\n\r\n## Example Tool Contract\r\n\r\n```ts\r\nexport interface ToolResult<T> {\r\n  ok: boolean;\r\n  data?: T;\r\n  error?: string;\r\n}\r\n```\r\n\r\n## Next Steps\r\n\r\n- Add unit tests around tool adapters.\r\n- Add prompt regression tests for critical scenarios.\r\n- Add CI checks for lint, type-check, and test coverage.\r\n"
+    },
+    {
+      "file": "home.md",
+      "title": "Home",
+      "category": "More",
+      "tags": [],
+      "date": "",
+      "yearMonth": "",
+      "summary": "This Markdown is loaded dynamically from the client side! 🚀 this is test content",
+      "author": "",
+      "status": "",
+      "imgUrl": "https://via.placeholder.com/400x200?text=Welcome",
+      "content": "\r\n# Welcome\r\nThis Markdown is loaded **dynamically** from the client side! 🚀\r\nthis is test content"
+    }
+  ]
+}
