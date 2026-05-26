@@ -115,7 +115,6 @@ async function buildIndex() {
             author: metadata.author || '',
             status: metadata.status || '',
             imgUrl: metadata.imgurl || '',
-            content,
         });
     }
 

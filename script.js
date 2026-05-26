@@ -332,7 +332,7 @@ function renderPostCard(post) {
     const title = document.createElement('h3');
     title.className = 'post-card__title';
     const link = document.createElement('a');
-    link.href = `#post/${encodeURIComponent(post.file)}`;
+    link.href = `#post/${encodeURIComponent(post.file.replace(/\.md$/i, ''))}`;
     link.textContent = post.title;
     title.appendChild(link);
     header.appendChild(title);
@@ -381,7 +381,7 @@ function renderPostCard(post) {
 
     const readMore = document.createElement('a');
     readMore.className = 'read-more';
-    readMore.href = `#post/${encodeURIComponent(post.file)}`;
+    readMore.href = `#post/${encodeURIComponent(post.file.replace(/\.md$/i, ''))}`;
     readMore.textContent = 'Read more';
 
     footer.appendChild(tagWrap);
@@ -709,8 +709,13 @@ function parseHash() {
     if (raw.startsWith('category/')) return { page: 'category', key: raw.slice('category/'.length) };
     if (raw.startsWith('tag/')) return { page: 'tag', key: raw.slice('tag/'.length) };
     if (raw.startsWith('archive/')) return { page: 'archive', key: raw.slice('archive/'.length) };
-    if (raw.startsWith('post/')) return { page: 'post', file: raw.slice('post/'.length) };
-    if (raw.endsWith('.md')) return { page: 'post', file: raw };
+    if (raw.startsWith('post/')) {
+        const rest = raw.slice('post/'.length);
+        const html = rest.endsWith('?html');
+        const file = (html ? rest.slice(0, -5) : rest).replace(/\.md$/i, '');
+        return { page: 'post', file, html };
+    }
+    if (raw.endsWith('.md')) return { page: 'post', file: raw.replace(/\.md$/i, ''), html: false };
 
     return { page: 'home' };
 }
@@ -820,7 +825,7 @@ async function init() {
             });
         }
 
-        function renderRoute() {
+        async function renderRoute() {
             const route = parseHash();
             const topSearchQuery = route.page === 'search' ? route.query : state.searchQuery;
             syncSearchInput(topSearchQuery);
@@ -895,8 +900,18 @@ async function init() {
                     break;
                 }
                 case 'post': {
-                    const post = state.postsByFile[route.file];
+                    if (route.html) {
+                        window.location.href = `html/${route.file}.html`;
+                        return;
+                    }
+                    const post = state.postsByFile[route.file]
+                        || state.postsByFile[`${route.file}.md`];
                     if (post) {
+                        if (!post.content) {
+                            const hydrated = await loadPostData(post.file);
+                            Object.assign(post, hydrated);
+                            state.postsByFile[post.file] = post;
+                        }
                         renderPostView(post);
                     } else {
                         renderHomeView(posts, state.searchQuery);

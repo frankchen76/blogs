@@ -2,6 +2,11 @@
     "name": "blogs",
     "private": true,
     "scripts": {
-        "build:index": "node scripts/build-content-index.js"
+        "build:index": "node scripts/build-content-index.js",
+        "build:html": "node scripts/build-html.js",
+        "build": "npm run build:index && npm run build:html"
+    },
+    "devDependencies": {
+        "markdown-it": "^14.2.0"
     }
 }

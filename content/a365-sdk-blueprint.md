@@ -9,10 +9,6 @@ status: draft
 imgUrl: assets/a365-sdk-blueprint-thumb.png
 ---
 
-# A365 SDK Blueprint
-
-This sample document shows how to organize an **Agent365 SDK** project with a clean and scalable structure.
-
 ## Goals
 
 - Define a predictable project layout.
