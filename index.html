@@ -405,6 +405,53 @@
             border-bottom: 1px solid var(--border);
         }
 
+        .article-view__title-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .article-view__title-row h1 {
+            margin: 0;
+        }
+
+        .article-view__html-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            background: rgba(255, 255, 255, 0.75);
+            text-decoration: none;
+            transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+        }
+
+        .article-view__html-link svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .article-view__html-link:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+            background: var(--accent-soft);
+            transform: translateY(-1px);
+        }
+
+        .article-view__html-link:focus-visible {
+            outline: 2px solid var(--accent-soft);
+            outline-offset: 2px;
+        }
+
         .markdown-body {
             color: var(--text);
         }

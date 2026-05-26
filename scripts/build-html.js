@@ -64,7 +64,7 @@ function escapeHtml(str) {
 // ---------------------------------------------------------------------------
 // HTML template
 // ---------------------------------------------------------------------------
-function buildPage({ title, category, author, date, tags, imgUrl, summary, bodyHtml, sourceFile }) {
+function buildPage({ title, category, author, date, tags, summary, bodyHtml }) {
     const tagItems = tags.length
         ? tags.map((t) => `<a href="../index.html#tag/${encodeURIComponent(t)}" class="tag-pill">${escapeHtml(t)}</a>`).join(', ')
         : '';
@@ -74,10 +74,6 @@ function buildPage({ title, category, author, date, tags, imgUrl, summary, bodyH
         date && `<span class="badge badge--date">${escapeHtml(date)}</span>`,
         author && `<span class="badge">✍ ${escapeHtml(author)}</span>`,
     ].filter(Boolean).join('\n                ');
-
-    const heroImage = imgUrl
-        ? `<img class="article-hero-img" src="${escapeHtml(imgUrl)}" alt="${escapeHtml(title)}">`
-        : '';
 
     return `<!DOCTYPE html>
 <html lang="en">
@@ -134,13 +130,6 @@ function buildPage({ title, category, author, date, tags, imgUrl, summary, bodyH
             background: rgba(255,255,255,0.88);
             box-shadow: var(--shadow);
             overflow: hidden;
-        }
-
-        .article-hero-img {
-            width: 100%;
-            max-height: 360px;
-            object-fit: cover;
-            display: block;
         }
 
         .article__inner {
@@ -209,7 +198,6 @@ function buildPage({ title, category, author, date, tags, imgUrl, summary, bodyH
     <div class="page-wrap">
         <a class="back-link" href="../index.html">← Back to Blog</a>
         <article class="article">
-            ${heroImage}
             <div class="article__inner">
                 <header class="article__header">
                     <h1 class="article__title">${escapeHtml(title)}</h1>
@@ -255,12 +243,11 @@ async function buildHtml() {
             const author = metadata.author || '';
             const date = metadata.date || '';
             const tags = parseTags(metadata.tags);
-            const imgUrl = metadata.imgurl || '';   // key is lowercased by parseFrontmatter
             const summary = metadata.summary || '';
 
             const bodyHtml = md.render(content);
 
-            const page = buildPage({ title, category, author, date, tags, imgUrl, summary, bodyHtml, sourceFile: file });
+            const page = buildPage({ title, category, author, date, tags, summary, bodyHtml });
             const outName = file.replace(/\.md$/i, '.html');
             const outPath = path.join(outputDir, outName);
             await fs.writeFile(outPath, page, 'utf8');

@@ -466,9 +466,28 @@ function renderPostView(post) {
     const header = document.createElement('header');
     header.className = 'article-view__header';
 
+    const titleRow = document.createElement('div');
+    titleRow.className = 'article-view__title-row';
+
     const title = document.createElement('h1');
     title.textContent = post.title;
-    header.appendChild(title);
+    titleRow.appendChild(title);
+
+    const htmlVersionLink = document.createElement('a');
+    htmlVersionLink.className = 'article-view__html-link';
+    htmlVersionLink.href = `#post/${encodeURIComponent(post.file.replace(/\.md$/i, ''))}?html`;
+    htmlVersionLink.setAttribute('aria-label', 'Open HTML version');
+    htmlVersionLink.title = 'Open HTML version';
+    htmlVersionLink.innerHTML = `
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M14 3h7v7"></path>
+            <path d="M10 14L21 3"></path>
+            <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path>
+        </svg>
+        <span class="sr-only">Open HTML version</span>
+    `;
+    titleRow.appendChild(htmlVersionLink);
+    header.appendChild(titleRow);
 
     const meta = document.createElement('div');
     meta.className = 'article-view__meta';
